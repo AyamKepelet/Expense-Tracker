@@ -1,4 +1,6 @@
 import "./Expanse.css"
+import Content from "./content/Content"
+import { createContext } from "react"
 export default function Expanse(){
   return(
     <>
@@ -17,8 +19,12 @@ export default function Expanse(){
               <input className="border-2 border-solid" type="date" required/>
               <button className="bg-green-500 p-1 hover:bg-green-700 transition duration-300">Add Expense</button>
             </form>
+            <div>
+            </div>
           </div>
         </div>
+
+      <Content/>
     </>
   )
 }
