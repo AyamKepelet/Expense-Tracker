@@ -1,51 +1,53 @@
 import "./Expanse.css"
 import Content from "./content/Content"
-import MyContext from "/Project JS Skilled/Expense Tracker/src/components/context/Mycontext"
+import MyContext from "../../components/Mycontext/Mycontext"
 import { useState,useRef } from "react"
 export default function Expanse(){
-  const [value,setValue] = useState([])  
-  const [resultName,setResultName] = useState([])
+
+  const [expenses,setExpenses] = useState([])  
+  const nameref = useRef(null)
+  const amountref = useRef(null)
+  const selectref = useRef(null)
+  const dateref = useRef(null)
   
-  const inputref = useRef(null)
-  
-  function inputEvent(){
-    inputref.current.value()
+  function TakeTheInput(){
+    const expenses = {
+      name: nameref.current.value,
+      amount: amountref.current.value,
+      select: selectref.current.value,
+      date: dateref.current.value
+    }
+
+    setExpenses((prev) => [...prev, expenses])
+    nameref.current.value = ""
+    amountref.current.value = ""
+    selectref.current.value = ""
+    dateref.current.value = ""
   }
 
-  function takeTheInput(){
-    setResultName(value)
-  }
   return(
     <>
         <div className="w-full justify-center flex h-screen">
           <div className="text-white bg-amber-400 w-max p-8 h-80 rounded-2xl">
-            <form className="[&>*]:m-4">
-              <input ref={inputref} onChange={(e)=>{
-                value.push(e.target.value)
-              }} className="border-2 border-solid" type="text"  placeholder="Expense Name"/>
-              <input onChange={(e)=>{
-                value.push(e.target.value)
-              }} className="border-2 border-solid" type="text"  placeholder="Amount"/>
-              <select className="border-2 border-solid">
+            <form className="[&>*]:m-10">
+              <input ref={nameref} className="border-2 border-solid" type="text"  placeholder="Expense Name"/>
+              <input ref={amountref} type="number" min={0} className=" text-center border-2 border-solid"  placeholder="Amount"/>
+              <select ref={selectref} className="border-2 border-solid text-black bg-amber-400">
                 <option value="All">All</option>
                 <option value="Food">Food</option>
                 <option value="Transport">Transport</option>
                 <option value="Entertainment">Entertainment</option>
                 <option value="Others">Others</option>
               </select>
-              <input className="border-2 border-solid" type="date" />
+              <input ref={dateref} className="border-2 border-solid" type="date" />
               <button onClick={(e)=>{
                 e.preventDefault()
-                takeTheInput()
-                console.log(value);
-                console.log(resultName);
-                console.log(inputref);
-                
-}} className="bg-green-500 p-1 hover:bg-green-700 transition duration-300">Add Expense</button>
+                TakeTheInput()
+}} className="bg-green-500 p-1 hover:bg-green-700 rounded transition duration-300">Add Expense</button>
             </form>
             <div>
             </div>
-    <MyContext.Provider value={{resultName}}>
+    <MyContext.Provider value={{expenses}}>
       <Content/>
     </MyContext.Provider>
           </div>
