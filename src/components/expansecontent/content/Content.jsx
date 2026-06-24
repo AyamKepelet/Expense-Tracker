@@ -3,7 +3,12 @@ import { useContext } from "react"
 import MyContext from "../../Mycontext/Mycontext"
 
 export default function Content() {
-    const {expenses} = useContext(MyContext) 
+    const {expenses,setExpenses} = useContext(MyContext) 
+            function DeleteExpense(indexToDelete) {
+        setExpenses((prev) => {
+            return prev.filter((_, index) => index !== indexToDelete);
+        });
+    }
     return(
         <>
         <div className="w-full flex justify-center flex-col bg-gray-400 p-4">
@@ -31,7 +36,8 @@ export default function Content() {
             </li>
             <li className="flex flex-col items-center w-32">
                 <p className="border rounded p-2 text-center">
-                    <button className="bg-red-700 text-white font-bold px-3 py-1 rounded hover:bg-red-900 transition">Delete</button>
+                    <button onClick={()=>{DeleteExpense(index)}
+                    } className="bg-red-700 text-white font-bold px-3 py-1 rounded hover:bg-red-900 transition">Delete</button>
                 </p>
             </li>
             </ul>
